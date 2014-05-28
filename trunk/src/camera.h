@@ -2,6 +2,7 @@
 
 #include "vector.h"
 #include "ray.h"
+#include <vector>
 
 class Camera {
 	public:
@@ -10,9 +11,9 @@ class Camera {
 	Vector position;
 	Camera();
 	Camera(Vector n, Vector u, Vector pos);
-	Ray rays[];
+	int pixels;
+	std::vector<Ray> rays;
 
 	private:
-	static int pixels;
 	void gen_rays();
 };
