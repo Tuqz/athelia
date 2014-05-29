@@ -11,7 +11,7 @@ class Camera {
 	Vector position;
 	Camera();
 	Camera(Vector n, Vector u, Vector pos);
-	int pixels;
+	int pixels = 700;
 	std::vector<Ray> rays;
 
 	private:
