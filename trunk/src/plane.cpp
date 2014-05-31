@@ -1,6 +1,6 @@
-#include "light.h"
+#include "plane.h"
 
-Light::Light(Vector pos, Vector norm, Vector u, double w, double h, double intense) {
+Plane::Plane(Vector pos, Vector norm, Vector u, double w, double h, double intense, bool isLight) {
 	position = pos;
 	normal = norm;
 	d = Vector::dot(norm, pos);
@@ -9,13 +9,14 @@ Light::Light(Vector pos, Vector norm, Vector u, double w, double h, double inten
 	lateral = Vector::cross(normal, up);
 	width = w;
 	height = h;
+	light = isLight;
 }
 
 
-int Light::collide(Ray ray) {
+double Plane::collide(Ray ray) {
 	double dir_dot_norm = Vector::dot(ray.direction, normal);
 	if(dir_dot_norm) {
-		double time = (d - Vector::dot(ray.start, normal))/dir_dot_norm;
+		double time = ((double)d - Vector::dot(ray.start, normal))/dir_dot_norm;
 		if(time >= 0) {
 			Vector intersect = ray.start + ray.direction*time;
 			Vector rel_pos = intersect - position;

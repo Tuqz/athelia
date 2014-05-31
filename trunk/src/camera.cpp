@@ -14,6 +14,11 @@ Camera::Camera(Vector n, Vector u, Vector pos) {
 	gen_rays();
 }
 
+void Camera::reset_rays() {
+	rays.clear();
+	gen_rays();
+}
+
 void Camera::gen_rays() {
 	for(int i = 0; i < pixels; ++i) {
 		for(int j = 0; j < pixels; ++j) {

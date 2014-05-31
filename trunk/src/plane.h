@@ -3,7 +3,8 @@
 #include "ray.h"
 #include <cmath>
 
-class Light {
+class Ray;
+class Plane {
 	public:
 	Vector position;
 	Vector normal;
@@ -13,6 +14,7 @@ class Light {
 	double intensity;
 	double width;
 	double height;
-	Light(Vector pos, Vector norm, Vector u, double w, double h, double intens);
-	int collide(Ray ray);
+	Plane(Vector pos, Vector norm, Vector u, double w, double h, double intens, bool isLight);
+	double collide(Ray ray);
+	bool light;
 };
