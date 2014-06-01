@@ -15,6 +15,6 @@ set(DEFAULT_LIBS "athelia-renderer")
 add_subdirectory(src/renderer)
 
 if(build_techdemos)
-	message(WARNING "Will build techdemos. HERE BE LINKER ERRORS")
 	add_subdirectory(techdemos/light)
+	add_subdirectory(techdemos/mirror)
 endif()

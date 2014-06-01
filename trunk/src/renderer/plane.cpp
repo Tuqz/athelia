@@ -1,10 +1,10 @@
 #include "plane.h"
+#include <cmath>
 
-Plane::Plane(Vector pos, Vector norm, Vector u, double w, double h, double intense, bool isLight) {
+Plane::Plane(Vector pos, Vector norm, Vector u, double w, double h, Colour col, bool isLight) : colour(col) {
 	position = pos;
 	normal = norm;
 	d = Vector::dot(norm, pos);
-	intensity = intense;
 	up = u;
 	lateral = Vector::cross(normal, up);
 	width = w;

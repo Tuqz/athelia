@@ -1,7 +1,7 @@
 #pragma once
 #include "vector.h"
 #include "ray.h"
-#include <cmath>
+#include "colour.h"
 
 class Ray;
 class Plane {
@@ -11,10 +11,10 @@ class Plane {
 	Vector up;
 	Vector lateral;
 	double d;
-	double intensity;
+	Colour colour;
 	double width;
 	double height;
-	Plane(Vector pos, Vector norm, Vector u, double w, double h, double intens, bool isLight);
+	Plane(Vector pos, Vector norm, Vector u, double w, double h, Colour col, bool isLight);
 	double collide(Ray ray);
 	bool light;
 };

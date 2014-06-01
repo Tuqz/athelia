@@ -1,44 +1,34 @@
 #include "ray.h"
 #include <algorithm>
 
-Ray::Ray() {
+Ray::Ray() : colour(WHITE) {
 	start = {0, 0, 0};
 	direction = {0, 0, 0};
-	intensity = 1;
 }
 
-Ray::Ray(Vector s, Vector d) {
+Ray::Ray(Vector s, Vector d) : colour(WHITE) {
 	start = s;
 	direction = d;
-	intensity = 1;
 }
 
 void Ray::trace(std::vector<Plane> entities) {
 	while(1) {
-		std::vector<double> times;
-		std::vector<std::pair<int, int>> key;
+		std::vector<std::pair<double, Plane>> times;
 		for(int i = 0; i < entities.size(); ++i) {
 			double time = entities[i].collide(*this);
 			if(time > 0) {
-				times.push_back(time);
-				key.push_back(std::make_pair(times.size()-1, i));
+				times.push_back(std::make_pair(time, entities[i]));
 			}
 		}
 		if(times.empty()) {
-			intensity = 0;
+			colour = BLACK;
 			return;
 		} else {
-			std::vector<double>::iterator min_elem = std::min_element(std::begin(times), std::end(times));
-			double min_time = *min_elem;
-			int pos = std::distance(times.begin(), min_elem);
-			int plane_no = 0;
-			for(int i = 0; i < key.size(); ++i) {
-				if(key[i].first == pos) {
-					plane_no = key[i].second;
-				}
-			}
-			Plane collider = entities[plane_no];
-			intensity *= collider.intensity;
+			auto min_pair = std::min_element(std::begin(times), std::end(times), [] (std::pair<double, Plane> i, std::pair<double, Plane> j) {return i.first < j.first;});
+			std::pair<double, Plane> min_elem = *min_pair;
+			double min_time = min_elem.first;
+			Plane collider = min_elem.second;
+			colour = colour*collider.colour;
 			if(!collider.light) {
 				start = start + direction * min_time;
 				direction = direction - collider.normal*2*Vector::dot(collider.normal, direction);
