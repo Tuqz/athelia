@@ -12,20 +12,54 @@ void set_pixel(SDL_Surface* surface, int x, int y, Uint32 colour) {
 }
 
 int main() {
-	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTTHREAD);
+	SDL_Init(SDL_INIT_VIDEO);
 	Camera cam = Camera();
 	std::vector<Plane> ents;
 	ents.push_back(Plane(Vector(2, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), 2, 2, 1, true));
 	SDL_Surface* screen = SDL_SetVideoMode(cam.pixels, cam.pixels, 32, SDL_SWSURFACE);
 	SDL_PixelFormat* format = screen->format;
 	double conversion = 3.14159/180;
-	double rate = 0.5;
 	bool quit = false;
 	while(!quit) {
 		SDL_Event event; 
 		while(SDL_PollEvent(&event)) {
 			if(event.type == SDL_QUIT) {
 				quit = true;
+			} else {
+				if(event.type == SDL_KEYDOWN) {
+					switch(event.key.keysym.sym) {
+						case 'w':
+							cam.tilt(-10*conversion);
+							break;
+						case 's':
+							cam.tilt(10*conversion);
+							break;
+						case 'a':
+							cam.pan(10*conversion);
+							break;
+						case 'd':
+							cam.pan(-10*conversion);
+							break;
+						case 'q':
+							cam.roll(10*conversion);
+							break;
+						case 'e':
+							cam.roll(-10*conversion);
+							break;
+						case SDLK_UP:
+							cam.translate(cam.normal*0.25);
+							break;
+						case SDLK_DOWN:
+							cam.translate(cam.normal*-0.25);
+							break;
+						case SDLK_LEFT:
+							cam.translate(Vector::cross(cam.normal, cam.up)*-0.25);
+							break;
+						case SDLK_RIGHT:
+							cam.translate(Vector::cross(cam.normal, cam.up)*0.25);
+							break;
+					}
+				}
 			}
 		}
 		SDL_LockSurface(screen);

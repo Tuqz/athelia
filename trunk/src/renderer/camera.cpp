@@ -1,4 +1,5 @@
 #include "camera.h"
+#include <cmath>
 
 Camera::Camera() {
 	normal = {1, 0, 0};
@@ -29,4 +30,33 @@ void Camera::gen_rays() {
 			rays.push_back(Ray(position, dir/dir.magnitude()));
 		}
 	}
+}
+
+void Camera::pan(double angle) {
+	normal = rotate(up, normal, angle);
+}
+
+void Camera::tilt(double angle) {
+	Vector lateral = Vector::cross(normal, up);
+	normal = rotate(lateral, normal, angle);
+	up = Vector::cross(lateral, normal);
+}
+
+void Camera::roll(double angle) {
+	up = rotate(normal, up, angle);
+}
+
+void Camera::translate(Vector trans) {
+	position = position + trans;
+}
+
+Vector Camera::rotate(Vector rot, Vector vec, double angle) {
+	double cangle = cos(angle);
+	double sangle = sin(angle);
+	double factor = 1-cangle;
+	Vector v = vec;
+	vec.x = (cangle + rot.x*rot.x*factor)*v.x + (rot.x*rot.y*factor - rot.z*sangle)*v.y + (rot.x*rot.z*factor + rot.y*sangle)*v.z;
+	vec.y = (rot.x*rot.y*factor+rot.z*sangle)*v.x + (cangle+rot.y*rot.y*factor)*v.y + (rot.y*rot.z*factor-rot.x*sangle)*v.z;
+	vec.z = (rot.x*rot.z*factor-rot.y*sangle)*v.x + (rot.y*rot.z*factor+rot.x*sangle)*v.y + (cangle+rot.z*rot.z*factor)*v.z;
+	return vec;
 }

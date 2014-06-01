@@ -14,7 +14,12 @@ class Camera {
 	int pixels = 250;
 	std::vector<Ray> rays;
 	void reset_rays();
+	void pan(double angle);
+	void tilt(double angle);
+	void roll(double angle);
+	void translate(Vector trans);
 
 	private:
 	void gen_rays();
+	Vector rotate(Vector rot, Vector vec, double angle);
 };
