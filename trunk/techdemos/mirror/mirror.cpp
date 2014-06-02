@@ -5,6 +5,7 @@
 #include <camera.h>
 #include <plane.h>
 #include <vector.h>
+#include <trace.h>
 
 void set_pixel(SDL_Surface* surface, int x, int y, Uint32 colour) {
 	Uint32* pixels = (Uint32* )surface->pixels;
@@ -68,8 +69,7 @@ int main() {
 		}
 		SDL_LockSurface(screen);
 		for(int i = 0; i < cam.pixels*cam.pixels; ++i) {
-			cam.rays[i].trace(ents);
-			Colour col = cam.rays[i].colour;
+			Colour col = trace(cam.rays[i], ents);
 			set_pixel(screen, i/cam.pixels, i%cam.pixels, SDL_MapRGB(format, col.red*255, col.green*255, col.blue*255));
 		}
 		SDL_UnlockSurface(screen);

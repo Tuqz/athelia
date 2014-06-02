@@ -3,7 +3,6 @@
 #include "ray.h"
 #include "colour.h"
 
-class Ray;
 class Plane {
 	public:
 	Vector position;
@@ -14,6 +13,7 @@ class Plane {
 	Colour colour;
 	double width;
 	double height;
+	Plane();
 	Plane(Vector pos, Vector norm, Vector u, double w, double h, Colour col, bool isLight);
 	double collide(Ray ray);
 	bool light;

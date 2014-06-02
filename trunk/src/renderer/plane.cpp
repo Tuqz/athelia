@@ -1,6 +1,17 @@
 #include "plane.h"
 #include <cmath>
 
+Plane::Plane() :colour(WHITE) {
+	position = Vector(0, 0, 0);
+	normal = Vector(0, 1, 0);
+	d = Vector::dot(normal, position);
+	up = Vector(1, 0, 0);
+	lateral = Vector::cross(normal, up);
+	width = 1;
+	height = 1;
+	light = false;
+}
+
 Plane::Plane(Vector pos, Vector norm, Vector u, double w, double h, Colour col, bool isLight) : colour(col) {
 	position = pos;
 	normal = norm;

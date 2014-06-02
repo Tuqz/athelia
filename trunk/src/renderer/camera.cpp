@@ -34,20 +34,28 @@ void Camera::gen_rays() {
 
 void Camera::pan(double angle) {
 	normal = rotate(up, normal, angle);
+	rays.clear();
+	gen_rays();
 }
 
 void Camera::tilt(double angle) {
 	Vector lateral = Vector::cross(normal, up);
 	normal = rotate(lateral, normal, angle);
 	up = Vector::cross(lateral, normal);
+	rays.clear();
+	gen_rays();
 }
 
 void Camera::roll(double angle) {
 	up = rotate(normal, up, angle);
+	rays.clear();
+	gen_rays();
 }
 
 void Camera::translate(Vector trans) {
 	position = position + trans;
+	rays.clear();
+	gen_rays();
 }
 
 Vector Camera::rotate(Vector rot, Vector vec, double angle) {

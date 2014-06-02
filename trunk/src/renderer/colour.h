@@ -17,3 +17,5 @@ class Colour {
 #define MAGENTA Colour(1, 0, 1)
 #define WHITE Colour(1, 1, 1)
 #define BLACK Colour(0, 0, 0)
+
+#define SKY Colour(0.3, 0.4, 1.0)
