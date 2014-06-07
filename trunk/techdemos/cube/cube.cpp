@@ -21,10 +21,11 @@ int main() {
 	cam.translate(Vector(0, 1, -1));
 	cam.pan(-26.5*conversion);
 	cam.tilt(-45*conversion);
-	std::vector<Plane> ents;
-	std::vector<Cube> cubes;
-	cubes.push_back(Cube(Vector(2, 0, 0), Colour(0.7, 0.7, 0.2)));
-	ents.push_back(Plane(Vector(-1, 0, 0), Vector(1, 0, 0), Vector(0, 1, 0), 2, 2, YELLOW, true));
+	std::vector<Renderable*> objects;
+	Cube cube = Cube(Vector(2, 0, 0), GREEN, false);
+	Plane light = Plane(Vector(-1, 0, 0), Vector(1, 0, 0), Vector(0, 1, 0), 2, 2, YELLOW, true);
+	objects.push_back(&cube);
+	objects.push_back(&light);
 	SDL_Surface* screen = SDL_SetVideoMode(cam.pixels, cam.pixels, 32, SDL_SWSURFACE);
 	SDL_PixelFormat* format = screen->format;
 	bool quit = false;
@@ -74,7 +75,7 @@ int main() {
 		}
 		SDL_LockSurface(screen);
 		for(int i = 0; i < cam.pixels*cam.pixels; ++i) {
-			Colour col = trace(cam.rays[i], ents, cubes);
+			Colour col = trace(cam.rays[i], objects);
 			set_pixel(screen, i/cam.pixels, i%cam.pixels, SDL_MapRGB(format, col.red*255, col.green*255, col.blue*255));
 		}
 		SDL_UnlockSurface(screen);

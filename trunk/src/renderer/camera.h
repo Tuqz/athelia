@@ -11,7 +11,7 @@ class Camera {
 	Vector position;
 	Camera();
 	Camera(Vector n, Vector u, Vector pos);
-	int pixels = 375;
+	int pixels = 250;
 	std::vector<Ray> rays;
 	void reset_rays();
 	void pan(double angle);

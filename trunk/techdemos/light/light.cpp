@@ -17,8 +17,9 @@ int main() {
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	Camera cam = Camera();
-	std::vector<Plane> ents;
-	ents.push_back(Plane(Vector(2, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), 2, 2, RED, true));
+	std::vector<Renderable*> ents;
+	Plane light = Plane(Vector(2, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), 2, 2, RED, true);
+	ents.push_back(&light);
 	SDL_Surface* screen = SDL_SetVideoMode(cam.pixels, cam.pixels, 32, SDL_SWSURFACE);
 	SDL_PixelFormat* format = screen->format;
 	double conversion = 3.14159/180;

@@ -4,6 +4,7 @@
 #include "SDL/SDL.h"
 #include <camera.h>
 #include <plane.h>
+#include <cube.h>
 #include <vector.h>
 #include <trace.h>
 
@@ -16,9 +17,11 @@ int main() {
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	Camera cam = Camera();
-	std::vector<Plane> ents;
-	ents.push_back(Plane(Vector(2, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), 2, 2, YELLOW, true));
-	ents.push_back(Plane(Vector(1.5, 0, 1.25), Vector(0, 0, -1), Vector(0, 1, 0), 2, 2, RED, false));
+	std::vector<Renderable*> ents;
+	Plane light = Plane(Vector(2, 0, 0), Vector(-1, 0, 0), Vector(0, 1, 0), 2, 2, YELLOW, true);
+	Cube mirror = Cube(Vector(1.5, 0, 2.25), 2, RED, false);
+	ents.push_back(&light);
+	ents.push_back(&mirror);
 	SDL_Surface* screen = SDL_SetVideoMode(cam.pixels, cam.pixels, 32, SDL_SWSURFACE);
 	SDL_PixelFormat* format = screen->format;
 	double conversion = 3.14159/180;

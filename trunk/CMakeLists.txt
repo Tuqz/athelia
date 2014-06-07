@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(Athelia)
 
-add_definitions("-std=c++11")
+add_definitions("-std=c++11 -Wall -pedantic")
 
 find_package(SDL REQUIRED)
 if(NOT SDL_FOUND)

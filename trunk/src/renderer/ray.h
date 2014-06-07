@@ -13,3 +13,5 @@ class Ray {
 	Ray(Vector s, Vector d);
 	int bounces;
 };
+
+#define MAX_RAY_BOUNCE 10

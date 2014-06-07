@@ -1,7 +1,9 @@
 #include "plane.h"
+#include "colour.h"
 #include <cmath>
+#include <iostream>
 
-Plane::Plane() :colour(WHITE) {
+Plane::Plane() : Renderable(false) {
 	position = Vector(0, 0, 0);
 	normal = Vector(0, 1, 0);
 	d = Vector::dot(normal, position);
@@ -9,10 +11,9 @@ Plane::Plane() :colour(WHITE) {
 	lateral = Vector::cross(normal, up);
 	width = 1;
 	height = 1;
-	light = false;
 }
 
-Plane::Plane(Vector pos, Vector norm, Vector u, double w, double h, Colour col, bool isLight) : colour(col) {
+Plane::Plane(Vector pos, Vector norm, Vector u, double w, double h, Colour col, bool isLight) : Renderable(isLight) {
 	position = pos;
 	normal = norm;
 	d = Vector::dot(norm, pos);
@@ -20,11 +21,12 @@ Plane::Plane(Vector pos, Vector norm, Vector u, double w, double h, Colour col, 
 	lateral = Vector::cross(normal, up);
 	width = w;
 	height = h;
-	light = isLight;
+	size = std::max(width, height);
+	colour = col;
 }
 
 
-double Plane::collide(Ray ray) {
+double Plane::intersect(Ray ray) {
 	double dir_dot_norm = Vector::dot(ray.direction, normal);
 	if(dir_dot_norm) {
 		double time = ((double)d - Vector::dot(ray.start, normal))/dir_dot_norm;
@@ -37,4 +39,17 @@ double Plane::collide(Ray ray) {
 		}
 	}
 	return -1;
+}
+
+Ray Plane::intersection(Vector collide, Ray ray) {
+	Ray out;
+	if(light) {
+		out.bounces = MAX_RAY_BOUNCE;
+	} else {
+		Vector dir = ray.direction - normal * 2 * Vector::dot(ray.direction, normal);
+		out = Ray(collide, dir);
+		out.bounces = ray.bounces + 1;
+	}
+	out.colour = ray.colour * colour;
+	return out;
 }
