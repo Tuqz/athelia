@@ -7,11 +7,7 @@
 #include <vector.h>
 #include <colour.h>
 #include <trace.h>
-
-void set_pixel(SDL_Surface* surface, int x, int y, Uint32 colour) {
-	Uint32* pixels = (Uint32* )surface->pixels;
-	pixels[(y*surface->w)+x] = colour;
-}
+#include "../utils.hpp"
 
 int main() {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -22,51 +18,13 @@ int main() {
 	ents.push_back(&light);
 	SDL_Surface* screen = SDL_SetVideoMode(cam.pixels, cam.pixels, 32, SDL_SWSURFACE);
 	SDL_PixelFormat* format = screen->format;
-	double conversion = 3.14159/180;
 	bool quit = false;
 	while(!quit) {
 		SDL_Event event; 
 		while(SDL_PollEvent(&event)) {
-			if(event.type == SDL_QUIT) {
-				quit = true;
-			} else {
-				if(event.type == SDL_KEYDOWN) {
-					switch(event.key.keysym.sym) {
-						case 'w':
-							cam.tilt(-10*conversion);
-							break;
-						case 's':
-							cam.tilt(10*conversion);
-							break;
-						case 'a':
-							cam.pan(10*conversion);
-							break;
-						case 'd':
-							cam.pan(-10*conversion);
-							break;
-						case 'q':
-							cam.roll(10*conversion);
-							break;
-						case 'e':
-							cam.roll(-10*conversion);
-							break;
-						case SDLK_UP:
-							cam.translate(cam.normal*0.25);
-							break;
-						case SDLK_DOWN:
-							cam.translate(cam.normal*-0.25);
-							break;
-						case SDLK_LEFT:
-							cam.translate(Vector::cross(cam.normal, cam.up)*-0.25);
-							break;
-						case SDLK_RIGHT:
-							cam.translate(Vector::cross(cam.normal, cam.up)*0.25);
-							break;
-						default:
-							break;
-					}
-				}
-			}
+			auto update = event_handler(event, cam);
+			quit = update.first;
+			cam = update.second;
 		}
 		SDL_LockSurface(screen);
 		for(int i = 0; i < cam.pixels*cam.pixels; ++i) {
