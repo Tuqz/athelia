@@ -1,0 +1,6 @@
+file(GLOB tri_src "*.cpp")
+find_package(SDL REQUIRED)
+add_definitions("-O3 -ffast-math")
+include_directories(${default_incs} ${SDL_INCLUDE_DIR})
+add_executable(triangle ${tri_src})
+target_link_libraries(triangle ${DEFAULT_LIBS} ${SDL_LIBRARY})

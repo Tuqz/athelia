@@ -3,26 +3,22 @@
 #include <algorithm>
 #include <iostream>
 
-Cube::Cube(Vector pos, bool isLight) : Renderable(isLight), position(pos) {
-	colour = WHITE;
+Cube::Cube(Vector pos, bool isLight) : Renderable(isLight, WHITE), position(pos) {
 	size = 1;
 	gen_faces();
 }
 
-Cube::Cube(Vector pos, double dim, bool isLight) : Renderable(isLight), position(pos) {
-	colour = WHITE;
+Cube::Cube(Vector pos, double dim, bool isLight) : Renderable(isLight, WHITE), position(pos) {
 	size = dim;
 	gen_faces();
 }
 
-Cube::Cube(Vector pos, Colour col, bool isLight) : Renderable(isLight), position(pos) {
-	colour = col;
+Cube::Cube(Vector pos, Colour col, bool isLight) : Renderable(isLight, col), position(pos) {
 	size = 1;
 	gen_faces();
 }
 
-Cube::Cube(Vector pos, double dim, Colour col, bool isLight) : Renderable(isLight), position(pos) {
-	colour = col;
+Cube::Cube(Vector pos, double dim, Colour col, bool isLight) : Renderable(isLight, col), position(pos) {
 	size = dim;
 	gen_faces();
 }
@@ -58,10 +54,11 @@ Ray Cube::intersection(Vector collide, Ray ray) {
 		Vector dir = ray.direction - collider.normal*2*Vector::dot(collider.normal, ray.direction);
 		out = Ray(collide, dir);
 		out.bounces = ray.bounces + 1;
+		out.colour = ray.colour * colour * Vector::dot(collider.normal, ray.direction);
 	} else {
 		out.bounces = MAX_RAY_BOUNCE;
+		out.colour = ray.colour * colour;
 	}
-	out.colour = ray.colour * colour;
 	return out;
 }
 

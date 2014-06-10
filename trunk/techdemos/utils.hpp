@@ -8,7 +8,8 @@
 
 void set_pixel(SDL_Surface* surface, int x, int y, Uint32 colour) {
 	Uint32* pixels = (Uint32* )surface->pixels;
-	pixels[(y*surface->w)+x] = colour;
+	int map_y = surface->h - y - 1;
+	pixels[(map_y*surface->w)+x] = colour;
 }
 
 std::pair<bool, Camera> event_handler(SDL_Event event, Camera cam) {
@@ -18,10 +19,10 @@ std::pair<bool, Camera> event_handler(SDL_Event event, Camera cam) {
 		if(event.type == SDL_KEYDOWN) {
 			switch(event.key.keysym.sym) {
 				case 'w':
-					cam.tilt(-10*conversion);
+					cam.tilt(10*conversion);
 					break;
 				case 's':
-					cam.tilt(10*conversion);
+					cam.tilt(-10*conversion);
 					break;
 				case 'a':
 					cam.pan(10*conversion);

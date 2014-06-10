@@ -8,7 +8,7 @@ class Renderable {
 	Vector position;
 	double size;
 	Colour colour;
-	Renderable(bool isLight) : light(isLight), colour(WHITE) {}
+	Renderable(bool isLight, Colour col) : light(isLight), colour(col) {}
 	virtual double intersect(Ray r) {
 		return 0;
 	};

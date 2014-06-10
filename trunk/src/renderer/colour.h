@@ -7,6 +7,7 @@ class Colour {
 	double blue;
 	Colour(double r, double g, double b);
 	Colour operator * (const Colour& other);
+	Colour operator * (const double& scale);
 };
 
 #define RED Colour(1, 0, 0)

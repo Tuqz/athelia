@@ -10,5 +10,5 @@ class Plane : public Renderable {
 	Plane();
 	Plane(Vector pos, Vector norm, Vector u, double w, double h, Colour col, bool isLight);
 	double intersect(Ray r);
-	Ray intersection(Vector intersection, Ray r);
+	Ray intersection(Vector collide, Ray r);
 };
