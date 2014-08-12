@@ -12,7 +12,7 @@ void set_pixel(SDL_Surface* surface, int x, int y, Uint32 colour) {
 	pixels[(map_y*surface->w)+x] = colour;
 }
 
-std::pair<bool, Camera> event_handler(SDL_Event event, Camera cam) {
+std::pair<bool, Renderer::Camera> event_handler(SDL_Event event, Renderer::Camera cam) {
 	if(event.type == SDL_QUIT) {
 		return std::make_pair(true, cam);
 	} else {

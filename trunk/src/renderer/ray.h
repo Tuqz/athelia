@@ -3,15 +3,16 @@
 #include "vector.h"
 #include "colour.h"
 #include <vector>
+namespace Renderer {
+	class Ray {
+		public:
+		Vector start;
+		Vector direction;
+		Colour colour;
+		Ray();
+		Ray(Vector s, Vector d);
+		int bounces;
+	};
 
-class Ray {
-	public:
-	Vector start;
-	Vector direction;
-	Colour colour;
-	Ray();
-	Ray(Vector s, Vector d);
-	int bounces;
-};
-
-#define MAX_RAY_BOUNCE 10
+	#define MAX_RAY_BOUNCE 10
+}
