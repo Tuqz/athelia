@@ -1,6 +1,0 @@
-file(GLOB cube_src "*.cpp")
-find_package(SDL REQUIRED)
-add_definitions("-O3 -ffast-math")
-include_directories(${default_incs} ${SDL_INCLUDE_DIR})
-add_executable(cube ${cube_src})
-target_link_libraries(cube ${DEFAULT_LIBS} ${SDL_LIBRARY})

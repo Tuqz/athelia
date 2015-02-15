@@ -1,6 +1,0 @@
-file(GLOB light_src "*.cpp")
-find_package(SDL REQUIRED)
-add_definitions("-O3 -ffast-math")
-include_directories(${default_incs} ${SDL_INCLUDE_DIR})
-add_executable(light ${light_src})
-target_link_libraries(light ${DEFAULT_LIBS} ${SDL_LIBRARY})
