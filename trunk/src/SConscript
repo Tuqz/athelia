@@ -1,0 +1,5 @@
+import glob
+Import('env')
+
+sources = glob.glob("*/*.cpp")
+env.SharedLibrary("athelia", source = sources)
