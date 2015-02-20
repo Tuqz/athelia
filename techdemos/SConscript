@@ -1,0 +1,21 @@
+import glob
+import os
+Import('env')
+
+env = env.Clone()
+
+files = os.listdir(".")
+dirs = []
+for file in files:
+	if os.path.isdir(file):
+		dirs.append(file)
+
+env.Append(CPPPATH = glob.glob("../src/*/"))
+env.Append(LIBPATH = ["../src/"])
+env.Append(LIBS = ["athelia"])
+env.Append(LINKFLAGS = ["-Wl,-rpath,../../src/"])
+for dir in dirs:
+	srcs = glob.glob("{0}/*.cpp".format(dir))
+	if len(srcs) > 0:
+		env.Program(target = "{0}/{0}".format(dir), source = srcs)
+
