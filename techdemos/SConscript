@@ -12,7 +12,7 @@ for file in files:
 
 env.Append(CPPPATH = glob.glob("../src/*/"))
 env.Append(LIBPATH = ["../src/"])
-env.Append(LIBS = ["athelia"])
+env.Append(LIBS = ["athelia", "OIS"])
 env.Append(LINKFLAGS = ["-Wl,-rpath,../../src/"])
 for dir in dirs:
 	srcs = glob.glob("{0}/*.cpp".format(dir))
