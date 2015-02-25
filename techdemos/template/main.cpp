@@ -1,8 +1,6 @@
 #include <memory>
-#include <fstream>
+#include "debug.h"
 #include "OGRE/Ogre.h"
-
-bool getDebugSetting();
 
 int main() {
 	std::unique_ptr<Ogre::Root> root(new Ogre::Root("", "", "LOG_NAME")); //Don't use plugins.cfg, resources.cfg and write the logs to LOG_NAME
@@ -10,7 +8,6 @@ int main() {
         root->loadPlugin("../../plugins/RenderSystem_GL_d");
     else
         root->loadPlugin("../../plugins/RenderSystem_GL");
-
 	Ogre::RenderSystem *renderer = root->getRenderSystemByName("OpenGL Rendering Subsystem");
 	root->setRenderSystem(renderer); //Set up and choose OpenGL as the renderer
 
@@ -39,14 +36,3 @@ int main() {
 	return 0;
 }
 
-bool getDebugSetting(){
-    std::ifstream file;
-    file.open("settings.txt");
-    std::string buffer;
-    file >> buffer;
-    file.close();
-    if(buffer == "debug")
-        return true;
-    else
-        return false;
-}
