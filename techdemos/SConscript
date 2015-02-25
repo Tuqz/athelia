@@ -1,6 +1,7 @@
 import glob
 import os
 Import('env')
+Import('debug')
 
 env = env.Clone()
 
@@ -11,8 +12,6 @@ for file in files:
 		dirs.append(file)
 
 env.Append(CPPPATH = glob.glob("../src/*/"))
-env.Append(LIBPATH = ["../src/"])
-env.Append(LIBS = ["athelia", "OIS"])
 env.Append(LINKFLAGS = ["-Wl,-rpath,../../src/"])
 for dir in dirs:
 	srcs = glob.glob("{0}/*.cpp".format(dir))

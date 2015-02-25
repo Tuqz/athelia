@@ -1,0 +1,21 @@
+include/*
+lib/*
+plugins/*
+[Bb]in/
+src/lib*
+
+
+*.layout
+*LOG_NAME
+
+*.dblite
+
+#Compiled Source#
+###############
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.obj

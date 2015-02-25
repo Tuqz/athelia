@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Athelia" />
+		<Option makefile="SConstruct" />
+		<Option makefile_is_custom="1" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/template" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<ExtraCommands>
+					<Add after="mv ./techdemos/template/template.exe ./bin/debug" />
+				</ExtraCommands>
+				<MakeCommands>
+					<Build command="cmd /c scons -f $makefile debug=1" />
+					<CompileFile command="cmd /c scons -f $makefile debug=1 $file" />
+					<Clean command="cmd /c scons -f $makefile debug=1 -c" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="cmd /c scons -f $makefile debug=1 -q" />
+					<SilentBuild command="cmd /c scons -f $makefile debug=1 &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/template" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<ExtraCommands>
+					<Add after="mv ./techdemos/template/template.exe ./bin/release" />
+				</ExtraCommands>
+				<MakeCommands>
+					<Build command="cmd /c scons -f $makefile" />
+					<CompileFile command="cmd /c scons -f $makefile $file" />
+					<Clean command="cmd /c scons -f $makefile -c" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="cmd /c scons -f $makefile -q" />
+					<SilentBuild command="cmd /c scons -f $makefile &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="SConstruct" />
+		<Unit filename="src/SConscript" />
+		<Unit filename="src/backend/block.cpp" />
+		<Unit filename="src/backend/block.h" />
+		<Unit filename="src/backend/cube.cpp" />
+		<Unit filename="src/backend/cube.h" />
+		<Unit filename="src/backend/patch.h" />
+		<Unit filename="techdemos/SConscript" />
+		<Unit filename="techdemos/block/main.cpp" />
+		<Unit filename="techdemos/template/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
