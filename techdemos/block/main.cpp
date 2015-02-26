@@ -13,10 +13,13 @@ namespace boost{
     }
 }
 
+Ogre::Vector3 moveNode(Ogre::Vector3 pos, float x, float y, float z);
+
 class GameSystem{
 public:
     int quitGame();
     std::unique_ptr<Ogre::Root> root; //This should be private with some level of control over what accesses it
+    Ogre::SceneNode* sceneCamera;
 private:
     bool shuttingDown = false;
 }; GameSystem gamesystem;
@@ -34,9 +37,26 @@ public:
         keyboard->capture();
         if(keyboard->isKeyDown(OIS::KC_ESCAPE))
             gamesystem.quitGame();
+        if(keyboard->isKeyDown(OIS::KC_UP)){
+            Ogre::Vector3 currentPos = gamesystem.sceneCamera->getPosition();
+            Ogre::Vector3 newPos = moveNode(currentPos, 0, 0, -.5);
+            gamesystem.sceneCamera->setPosition(newPos);
+        }
+        if(keyboard->isKeyDown(OIS::KC_DOWN)){
+            Ogre::Vector3 currentPos = gamesystem.sceneCamera->getPosition();
+            Ogre::Vector3 newPos = moveNode(currentPos, 0, 0, .5);
+            gamesystem.sceneCamera->setPosition(newPos);
+        }
 		return result;
 	}
 };
+
+Ogre::Vector3 moveNode(Ogre::Vector3 pos, float x, float y, float z){
+    pos.x += x;
+    pos.y += y;
+    pos.z += z;
+    return pos;
+}
 
 int main() {
 	gamesystem.root = std::unique_ptr<Ogre::Root>(new Ogre::Root("", "", "cube.log")); //Don't use plugins.cfg, resources.cfg and write the logs to cube.log
@@ -54,7 +74,14 @@ int main() {
 
 	Ogre::SceneManager *sceneMgr = gamesystem.root->createSceneManager("DefaultSceneManager"); //Use the default scene manager
 
-	Ogre::Camera *camera = sceneMgr->createCamera("Camera");
+    gamesystem.sceneCamera = sceneMgr->createSceneNode("sceneCamera");
+
+    //Check if bad node
+
+    if(gamesystem.sceneCamera == NULL)
+        return 1;
+
+    Ogre::Camera *camera = sceneMgr->createCamera("Camera");
 
 	camera->setPosition(Ogre::Vector3(0, 0, 80));
 	camera->lookAt(Ogre::Vector3(0, 0, -300)); //Put the camera at (0, 0, 80), and look back toward (0, 0, -300)
@@ -63,6 +90,9 @@ int main() {
 	Ogre::Viewport *view = window->addViewport(camera);
 	view->setBackgroundColour(Ogre::ColourValue(0.0, 0.1, 0.9));
 	camera->setAspectRatio(view->getActualWidth() / view->getActualHeight()); //Create a viewport with a blue-ish background and give it the aspect ratio of the window
+
+    //Add camera to sceneCamera node
+    gamesystem.sceneCamera->attachObject(camera);
 
 	OIS::ParamList list;
 	size_t windowHandle = 0;
@@ -96,6 +126,7 @@ int GameSystem::quitGame(){
     if(shuttingDown == false){
         root->shutdown();
         shuttingDown = true;
+        exit(1);
     }
     return 1;
 }
