@@ -1,3 +1,6 @@
+#include <iostream>
+#include <string>
+
 #include "cube.h"
 #include "patch.h"
 #include "OGRE/OgreVector3.h"

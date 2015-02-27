@@ -1,4 +1,7 @@
-env = Environment(TARGET_ARCH='x86', tools=['mingw'])
+import os
+env = Environment(ENV = {'PATH' : os.environ['PATH']}, TARGET_ARCH='x86', tools=['mingw'])
+
+env["CXX"] = "g++"
 
 debug=ARGUMENTS.get('debug', 0)
 if int(debug) == 1:

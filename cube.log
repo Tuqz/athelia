@@ -1,0 +1,28 @@
+16:48:34: Creating resource group General
+16:48:34: Creating resource group Internal
+16:48:34: Creating resource group Autodetect
+16:48:34: SceneManagerFactory for type 'DefaultSceneManager' registered.
+16:48:34: Registering ResourceManager for type Material
+16:48:34: Registering ResourceManager for type Mesh
+16:48:34: Registering ResourceManager for type Skeleton
+16:48:34: MovableObjectFactory for type 'ParticleSystem' registered.
+16:48:34: ArchiveFactory for archive type FileSystem registered.
+16:48:34: ArchiveFactory for archive type Zip registered.
+16:48:34: ArchiveFactory for archive type EmbeddedZip registered.
+16:48:34: DDS codec registering
+16:48:34: FreeImage version: 3.15.3
+16:48:34: This program uses FreeImage, a free, open source image library supporting all common bitmap formats. See http://freeimage.sourceforge.net for details
+16:48:34: Supported formats: bmp,ico,jpg,jif,jpeg,jpe,jng,koa,iff,lbm,mng,pbm,pbm,pcd,pcx,pgm,pgm,png,ppm,ppm,ras,tga,targa,tif,tiff,wap,wbmp,wbm,psd,cut,xbm,xpm,gif,hdr,g3,sgi,exr,j2k,j2c,jp2,pfm,pct,pict,pic
+16:48:34: Registering ResourceManager for type HighLevelGpuProgram
+16:48:34: Registering ResourceManager for type Compositor
+16:48:34: MovableObjectFactory for type 'Entity' registered.
+16:48:34: MovableObjectFactory for type 'Light' registered.
+16:48:34: MovableObjectFactory for type 'BillboardSet' registered.
+16:48:34: MovableObjectFactory for type 'ManualObject' registered.
+16:48:34: MovableObjectFactory for type 'BillboardChain' registered.
+16:48:34: MovableObjectFactory for type 'RibbonTrail' registered.
+16:48:34: *-*-* OGRE Initialising
+16:48:34: *-*-* Version 1.10.0unstable (Xalafu)
+16:48:34: Loading library ../../plugins/RenderSystem_GL
+16:48:36: OGRE EXCEPTION(7:InternalErrorException): Could not load dynamic library ../../plugins/RenderSystem_GL.  System Error: The specified module could not be found.
+ in DynLib::load at ../../OgreMain/src/OgreDynLib.cpp (line 111)

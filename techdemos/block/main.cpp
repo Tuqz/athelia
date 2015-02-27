@@ -1,12 +1,10 @@
-#include <cube.h>
-#include <memory>
+#include <iostream>
+#include <string>
+
 #include "patch.h"
 #include "debug.h"
-#include "OGRE/Ogre.h"
-#include "OIS/OISMouse.h"
-#include "OIS/OISKeyboard.h"
-#include "OIS/OISInputManager.h"
-#include <iostream>
+#include "graphics.h"
+#include "input.h"
 
 namespace boost{
     void throw_exception(std::exception const &e){
@@ -15,22 +13,23 @@ namespace boost{
 
 Ogre::Vector3 moveNode(Ogre::Vector3 pos, float x, float y, float z);
 
-class GameSystem{
-public:
-    int quitGame();
-    std::unique_ptr<Ogre::Root> root; //This should be private with some level of control over what accesses it
-    Ogre::SceneNode* sceneCamera;
-private:
-    bool shuttingDown = false;
-}; GameSystem gamesystem;
-
 class Controller : public Ogre::FrameListener {
 private:
 	std::vector<std::function<bool(OIS::KeyCode)>> callbacks; //Callbacks return true, unless the program needs to stop, when they return false
 	std::set<OIS::KeyCode> codes;
 	OIS::Keyboard *keyboard;
+	OIS::Mouse *mouse;
+
+	Ogre::Real mRotate = 0.13;
 public:
-	Controller(OIS::Keyboard *kb) : keyboard(kb) {}
+	Controller(OIS::Keyboard *kb, OIS::Mouse *ms) : keyboard(kb), mouse(ms) {}
+
+    bool mouseMoved(const OIS::MouseEvent &evt){
+        //mouse stuff
+        gamesystem.sceneCamera->yaw(Ogre::Degree(-mRotate * evt.state.X.rel), Ogre::Node::TS_WORLD);
+        gamesystem.sceneCamera->pitch(Ogre::Degree(-mRotate * evt.state.Y.rel), Ogre::Node::TS_LOCAL);
+        return true;
+    }
 
 	bool frameRenderingQueued(const Ogre::FrameEvent &evt) { //This means that input is dependent on graphics
 		bool result = true;
@@ -38,42 +37,30 @@ public:
         if(keyboard->isKeyDown(OIS::KC_ESCAPE))
             gamesystem.quitGame();
         if(keyboard->isKeyDown(OIS::KC_UP)){
-            Ogre::Vector3 currentPos = gamesystem.sceneCamera->getPosition();
-            Ogre::Vector3 newPos = moveNode(currentPos, 0, 0, -.5);
-            gamesystem.sceneCamera->setPosition(newPos);
+            gamesystem.sceneCamera->translate(0, 0, -.25);
         }
         if(keyboard->isKeyDown(OIS::KC_DOWN)){
-            Ogre::Vector3 currentPos = gamesystem.sceneCamera->getPosition();
-            Ogre::Vector3 newPos = moveNode(currentPos, 0, 0, .5);
-            gamesystem.sceneCamera->setPosition(newPos);
+            gamesystem.sceneCamera->translate(0, 0, .25);
+        }
+        if(keyboard->isKeyDown(OIS::KC_LEFT)){
+            gamesystem.sceneCamera->translate(-.25, 0, 0);
+        }
+        if(keyboard->isKeyDown(OIS::KC_RIGHT)){
+            gamesystem.sceneCamera->translate(.25, 0, 0);
         }
 		return result;
 	}
 };
 
-Ogre::Vector3 moveNode(Ogre::Vector3 pos, float x, float y, float z){
-    pos.x += x;
-    pos.y += y;
-    pos.z += z;
-    return pos;
-}
-
 int main() {
-	gamesystem.root = std::unique_ptr<Ogre::Root>(new Ogre::Root("", "", "cube.log")); //Don't use plugins.cfg, resources.cfg and write the logs to cube.log
-	if(getDebugSetting() == true)
-        gamesystem.root->loadPlugin("../../plugins/RenderSystem_GL_d");
-    else
-        gamesystem.root->loadPlugin("../../plugins/RenderSystem_GL");
-	Ogre::RenderSystem *renderer = gamesystem.root->getRenderSystemByName("OpenGL Rendering Subsystem");
-	gamesystem.root->setRenderSystem(renderer); //Set up and choose OpenGL as the renderer
-
-	renderer->setConfigOption("Full Screen", "No");
-	renderer->setConfigOption("Video Mode", "800 x 600 @ 32-bit colour");
-
-	Ogre::RenderWindow *window = gamesystem.root->initialise(true, "Cube Demonstration"); //Create window
-
-	Ogre::SceneManager *sceneMgr = gamesystem.root->createSceneManager("DefaultSceneManager"); //Use the default scene manager
-
+    std::string cRenderSystem;
+    if(getDebugSetting() == true){
+        cRenderSystem = "../../plugins/RenderSystem_GL_d";
+    } else {
+        cRenderSystem = "../../plugins/RenderSystem_GL";
+    }
+    graphics.initGraphics(cRenderSystem, "Athelia", false);
+/*
     gamesystem.sceneCamera = sceneMgr->createSceneNode("sceneCamera");
 
     //Check if bad node
@@ -101,7 +88,7 @@ int main() {
 	OIS::InputManager *inputMgr = OIS::InputManager::createInputSystem(list);
 	OIS::Keyboard* keyboard = (OIS::Keyboard *)(inputMgr->createInputObject(OIS::OISKeyboard, false));
 
-	Controller controller(keyboard);
+	Controller controller(keyboard, mouse);
 
 	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Green", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	material->getTechnique(0)->getPass(0)->setLightingEnabled(true);
@@ -118,15 +105,6 @@ int main() {
     gamesystem.root->addFrameListener(&controller);
 
 	gamesystem.root->startRendering();
-
+*/
 	return 0;
-}
-
-int GameSystem::quitGame(){
-    if(shuttingDown == false){
-        root->shutdown();
-        shuttingDown = true;
-        exit(1);
-    }
-    return 1;
 }

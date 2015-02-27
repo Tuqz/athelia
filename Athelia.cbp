@@ -9,12 +9,14 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/template" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/debug/block" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/debug" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<ExtraCommands>
-					<Add after="mv ./techdemos/template/template.exe ./bin/debug" />
+					<Add before='cmd /c &quot;cp src\libathelia.a lib\win32\debug&quot;' />
+					<Add after="mv ./techdemos/block/block.exe ./bin/debug" />
 				</ExtraCommands>
 				<MakeCommands>
 					<Build command="cmd /c scons -f $makefile debug=1" />
@@ -26,12 +28,14 @@
 				</MakeCommands>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/template" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/release/block" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/release" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<ExtraCommands>
-					<Add after="mv ./techdemos/template/template.exe ./bin/release" />
+					<Add before='cmd /c &quot;cp src\libathelia.a lib\win32\release&quot;' />
+					<Add after="mv ./techdemos/block/block.exe ./bin/release" />
 				</ExtraCommands>
 				<MakeCommands>
 					<Build command="cmd /c scons -f $makefile" />
@@ -52,6 +56,11 @@
 		<Unit filename="src/backend/block.h" />
 		<Unit filename="src/backend/cube.cpp" />
 		<Unit filename="src/backend/cube.h" />
+		<Unit filename="src/backend/gamesystem.cpp" />
+		<Unit filename="src/backend/gamesystem.h" />
+		<Unit filename="src/backend/graphics.cpp" />
+		<Unit filename="src/backend/graphics.h" />
+		<Unit filename="src/backend/input.h" />
 		<Unit filename="src/backend/patch.h" />
 		<Unit filename="techdemos/SConscript" />
 		<Unit filename="techdemos/block/main.cpp" />

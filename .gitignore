@@ -3,12 +3,14 @@ lib/*
 plugins/*
 [Bb]in/
 src/lib*
+doxygen/
 
 
 *.layout
 *LOG_NAME
 
 *.dblite
+
 
 #Compiled Source#
 ###############
