@@ -2,10 +2,7 @@
 #include "input.h"
 #include "patch.h"
 
-inputHandler input;
-
 int inputHandler::setupInputs(){
-
     //Setup the OIS::InputManager
     OIS::ParamList list;
 	size_t windowHandle = 0;

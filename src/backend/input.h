@@ -37,8 +37,8 @@ private:
     bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ){}
     bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ){}
 
-    bool keyPressed(const OIS::KeyEvent &arg);
-    bool keyReleased(const OIS::KeyEvent &arg);
-}; extern inputHandler input;
+    bool keyPressed(const OIS::KeyEvent &arg){}
+    bool keyReleased(const OIS::KeyEvent &arg){}
+}; extern inputHandler inputMgr;
 
 #endif // INPUT_H_INCLUDED

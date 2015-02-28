@@ -16,7 +16,6 @@
 				<Option compiler="gcc" />
 				<ExtraCommands>
 					<Add before='cmd /c &quot;cp src\libathelia.a lib\win32\debug&quot;' />
-					<Add after='cmd /c &quot;takeown /f /techdemos/block/block.exe&quot;' />
 					<Add after="mv ./techdemos/block/block.exe ./bin/debug" />
 				</ExtraCommands>
 				<MakeCommands>
@@ -75,6 +74,7 @@
 		<Unit filename="src/backend/input.cpp" />
 		<Unit filename="src/backend/input.h">
 			<Option compile="1" />
+			<Option link="1" />
 		</Unit>
 		<Unit filename="src/backend/patch.h">
 			<Option compile="1" />

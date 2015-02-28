@@ -6,6 +6,8 @@
 #include "graphics.h"
 #include "input.h"
 
+inputHandler inputMgr;
+
 int main() {
     std::string cRenderSystem;
 
@@ -51,7 +53,7 @@ int main() {
 	Ogre::Light *light = sceneMgr->createLight("Light1");
 	light->setPosition(50, 50, 50);
 
-    input.setupInputs();
+    inputMgr.setupInputs();
 
 	gamesystem.root->startRendering();
 
