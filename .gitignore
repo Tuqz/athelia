@@ -8,6 +8,7 @@ doxygen/
 
 *.layout
 *LOG_NAME
+*.log
 
 *.dblite
 

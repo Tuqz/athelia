@@ -2,7 +2,7 @@
 #include "debug.h"
 #include "OGRE/Ogre.h"
 
-int main() {
+int main() {/*
 	std::unique_ptr<Ogre::Root> root(new Ogre::Root("", "", "LOG_NAME")); //Don't use plugins.cfg, resources.cfg and write the logs to LOG_NAME
 	if(getDebugSetting() == true)
         root->loadPlugin("../../plugins/RenderSystem_GL_d");
@@ -32,7 +32,7 @@ int main() {
 		Ogre::WindowEventUtilities::messagePump();
 		root->renderOneFrame();
 	}
-
+*/
 	return 0;
 }
 

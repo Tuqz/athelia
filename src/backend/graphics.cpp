@@ -29,3 +29,11 @@ int graphicsHandler::initGraphics(std::string renderSystem, std::string windowTi
 Ogre::SceneManager* graphicsHandler::createSceneManager(std::string managerName){
     return gamesystem.root->createSceneManager(managerName);
 }
+
+Ogre::SceneManager* graphicsHandler::getActiveSceneManager(){
+    return sceneMgr;
+}
+
+Ogre::RenderWindow* graphicsHandler::getCurrentWindow(){
+    return window;
+}

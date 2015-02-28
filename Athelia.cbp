@@ -16,6 +16,7 @@
 				<Option compiler="gcc" />
 				<ExtraCommands>
 					<Add before='cmd /c &quot;cp src\libathelia.a lib\win32\debug&quot;' />
+					<Add after='cmd /c &quot;takeown /f /techdemos/block/block.exe&quot;' />
 					<Add after="mv ./techdemos/block/block.exe ./bin/debug" />
 				</ExtraCommands>
 				<MakeCommands>
@@ -53,15 +54,31 @@
 		<Unit filename="SConstruct" />
 		<Unit filename="src/SConscript" />
 		<Unit filename="src/backend/block.cpp" />
-		<Unit filename="src/backend/block.h" />
+		<Unit filename="src/backend/block.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="src/backend/controller.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="src/backend/cube.cpp" />
-		<Unit filename="src/backend/cube.h" />
+		<Unit filename="src/backend/cube.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="src/backend/gamesystem.cpp" />
-		<Unit filename="src/backend/gamesystem.h" />
+		<Unit filename="src/backend/gamesystem.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="src/backend/graphics.cpp" />
-		<Unit filename="src/backend/graphics.h" />
-		<Unit filename="src/backend/input.h" />
-		<Unit filename="src/backend/patch.h" />
+		<Unit filename="src/backend/graphics.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="src/backend/input.cpp" />
+		<Unit filename="src/backend/input.h">
+			<Option compile="1" />
+		</Unit>
+		<Unit filename="src/backend/patch.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="techdemos/SConscript" />
 		<Unit filename="techdemos/block/main.cpp" />
 		<Unit filename="techdemos/template/main.cpp" />
@@ -70,6 +87,15 @@
 			<envvars />
 			<debugger />
 			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

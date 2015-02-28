@@ -1,5 +1,14 @@
+#ifndef PATCH_H_INCLUDED
+#define PATCH_H_INCLUDED
+
 #include <iostream>
 #include <sstream>
+
+/*!
+    * \brief    This file provides patches for the Windows systems that use Mingw as their build system.
+    * \author   Jacob843
+    * \version  0.0.1a
+*/
 
 namespace patch
 {
@@ -10,3 +19,5 @@ namespace patch
         return stm.str() ;
     }
 }
+
+#endif // PATCH_H_INCLUDED

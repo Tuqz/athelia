@@ -7,6 +7,14 @@
 #include "cube.h"
 #include "gamesystem.h"
 
+/*!
+    * \brief    The "graphicsHandler" class handles anything related to graphics.
+    * \details  Ogre3D is currently our graphics engine. In this class, functions exist to initialize the engine, check on variables, or control the movement of nodes.
+    * \author   Jacob843
+    * \author   Tuqz
+    * \version  0.0.1a
+*/
+
 class graphicsHandler{
 public:
     //Initializations and creations
@@ -17,8 +25,13 @@ public:
     //Check private variables. May be used later for debugging
     int checkRenderWindow();
     int checkSceneManager();
+
     //Get defaults related to graphics
-    std::string getActiveSceneManager();
+    Ogre::SceneManager* getActiveSceneManager();
+    Ogre::RenderWindow* getCurrentWindow();
+
+    //Movement of Ogre Elements
+    Ogre::Vector3 translateNode(Ogre::Vector3 pos, float x, float y, float z);
 private:
     Ogre::RenderSystem *renderer;
     Ogre::RenderWindow *window;

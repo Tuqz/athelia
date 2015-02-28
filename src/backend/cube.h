@@ -7,6 +7,12 @@
 
 #pragma once
 
+/*!
+    * \brief    This is a simple cube example.
+    * \author   Tuqz
+    * \version  0.0.1a
+*/
+
 class Cube : public Block {
 public:
 	double dimensions;
