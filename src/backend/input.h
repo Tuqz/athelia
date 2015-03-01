@@ -12,7 +12,7 @@
     * \version  0.0.1a
 */
 
-class inputHandler : public Ogre::FrameListener, public OIS::MouseListener, public OIS::KeyListener {
+class inputHandler: public Ogre::FrameListener, public OIS::MouseListener, public OIS::KeyListener {
 public:
     int setupInputs();
 
@@ -43,6 +43,7 @@ private:
 
     bool keyPressed(const OIS::KeyEvent &arg);
     bool keyReleased(const OIS::KeyEvent &arg);
+
 }; extern inputHandler inputMgr;
 
 #endif // INPUT_H_INCLUDED

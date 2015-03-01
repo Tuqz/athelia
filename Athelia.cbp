@@ -74,7 +74,6 @@
 		<Unit filename="src/backend/input.cpp" />
 		<Unit filename="src/backend/input.h">
 			<Option compile="1" />
-			<Option link="1" />
 		</Unit>
 		<Unit filename="src/backend/patch.h">
 			<Option compile="1" />

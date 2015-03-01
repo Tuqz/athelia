@@ -62,6 +62,13 @@ bool inputHandler::mouseMoved(const OIS::MouseEvent &arg){
     return true;
 }
 
+bool inputHandler::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ){
+    return true;
+}
+bool inputHandler::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ){
+    return true;
+}
+
 bool inputHandler::keyPressed(const OIS::KeyEvent &arg){
     switch(arg.key){
         case OIS::KC_ESCAPE:

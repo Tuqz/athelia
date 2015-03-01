@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "OGRE/Ogre.h"
-#include "OGRE/SdkTrays.h"
 #include "cube.h"
 #include "gamesystem.h"
 
@@ -16,7 +15,7 @@
     * \version  0.0.1a
 */
 
-class graphicsHandler: public OgreBites::SdkTrayListener {
+class graphicsHandler{
 public:
     //Initializations and creations
     /** \brief Initializes Ogre graphics
@@ -69,11 +68,6 @@ private:
     Ogre::RenderSystem *renderer;
     Ogre::RenderWindow *window;
     Ogre::SceneManager *sceneMgr;
-
-    //Overlay
-    Ogre::OverlaySystem *overlaySystem;
-    OgreBites::InputContext inputContext;
-    OgreBites::SdkTrayManager *trayMgr;
 }; extern graphicsHandler graphics;
 
 #endif // GRAPHICS_H_INCLUDED
