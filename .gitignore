@@ -12,6 +12,8 @@ doxygen/
 
 *.dblite
 
+*Doxyfile
+
 
 #Compiled Source#
 ###############

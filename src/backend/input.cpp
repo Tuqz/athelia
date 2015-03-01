@@ -11,8 +11,12 @@ int inputHandler::setupInputs(){
 	inputMgr = OIS::InputManager::createInputSystem(list);
 
     //Setup mouse and keyboard
-    kb = (OIS::Keyboard *)(inputMgr->createInputObject(OIS::OISKeyboard, false));
-    ms = (OIS::Mouse *)(inputMgr->createInputObject(OIS::OISMouse, false));
+    kb = (OIS::Keyboard *)(inputMgr->createInputObject(OIS::OISKeyboard, true));
+    ms = (OIS::Mouse *)(inputMgr->createInputObject(OIS::OISMouse, true));
+
+    //Set movement speed
+    mMove = 250;
+    mDirection = Ogre::Vector3::ZERO;
 
     //Bind our inputs to Ogre. This means that we depend on Ogre to keep a high FPS
     bindInput(ms, kb);
@@ -21,31 +25,24 @@ int inputHandler::setupInputs(){
 }
 
 int inputHandler::bindInput(OIS::Mouse* localMS, OIS::Keyboard* localKB){
-   gamesystem.root->addFrameListener(this);
+    gamesystem.root->addFrameListener(this);
+    localKB->setEventCallback(this);
+    localMS->setEventCallback(this);
 }
 
 
 bool inputHandler::frameRenderingQueued(const Ogre::FrameEvent &evt){
     bool result = true;
     OIS::Keyboard* keyboard = getActiveKeyboard();
+    OIS::Mouse* mouse = getActiveMouse();
     keyboard->capture();
-    if(keyboard->isKeyDown(OIS::KC_ESCAPE))
-        gamesystem.quitGame();
-    if(keyboard->isKeyDown(OIS::KC_UP)){
-        gamesystem.sceneCamera->translate(0, 0, -.25);
-    }
-    if(keyboard->isKeyDown(OIS::KC_DOWN)){
-        gamesystem.sceneCamera->translate(0, 0, .25);
-    }
-    if(keyboard->isKeyDown(OIS::KC_LEFT)){
-        gamesystem.sceneCamera->translate(-.25, 0, 0);
-    }
-    if(keyboard->isKeyDown(OIS::KC_RIGHT)){
-        gamesystem.sceneCamera->translate(.25, 0, 0);
-    }
+    mouse->capture();
+
+    //Player movement
+    gamesystem.sceneCamera->translate(mDirection * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+
     return result;
 }
-
 
 OIS::Keyboard* inputHandler::getActiveKeyboard(){
     return kb;
@@ -59,3 +56,47 @@ OIS::InputManager* inputHandler::getInputManager(){
     return inputMgr;
 }
 
+bool inputHandler::mouseMoved(const OIS::MouseEvent &arg){
+    gamesystem.sceneCamera->yaw(Ogre::Degree(-mRotate * arg.state.X.rel), Ogre::Node::TS_WORLD);
+    gamesystem.sceneCamera->pitch(Ogre::Degree(-mRotate * arg.state.Y.rel), Ogre::Node::TS_LOCAL);
+    return true;
+}
+
+bool inputHandler::keyPressed(const OIS::KeyEvent &arg){
+    switch(arg.key){
+        case OIS::KC_ESCAPE:
+            gamesystem.quitGame();
+            break;
+        case OIS::KC_UP:
+            mDirection.z = -mMove;
+            break;
+        case OIS::KC_DOWN:
+            mDirection.z = mMove;
+            break;
+        case OIS::KC_LEFT:
+            mDirection.x = -mMove;
+            break;
+        case OIS::KC_RIGHT:
+            mDirection.x = mMove;
+            break;
+    }
+    return true;
+}
+
+bool inputHandler::keyReleased(const OIS::KeyEvent &arg){
+    switch(arg.key){
+        case OIS::KC_UP:
+            mDirection.z = 0;
+            break;
+        case OIS::KC_DOWN:
+            mDirection.z = 0;
+            break;
+        case OIS::KC_LEFT:
+            mDirection.x = 0;
+            break;
+        case OIS::KC_RIGHT:
+            mDirection.x = 0;
+            break;
+    }
+    return true;
+}

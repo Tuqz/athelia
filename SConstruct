@@ -17,7 +17,7 @@ else:
 
 env.Append(LIBPATH = ["../lib/boost_1_57_0/stage/lib"])
 env.Append(CPPFLAGS = ["-std=c++11"])
-env.Append(CPPPATH = ["../include"])
+env.Append(CPPPATH = ["../include", "../include/OGRE" ,"../include/OGRE/Overlay"])
 
 SConscript("src/SConscript", exports = 'env')
 SConscript("techdemos/SConscript", exports = ['env', 'debug'])

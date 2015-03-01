@@ -22,12 +22,34 @@ int graphicsHandler::initGraphics(std::string renderSystem, std::string windowTi
     window = gamesystem.root->initialise(true, windowTitle);
     //Setup sceneManager
     sceneMgr = createSceneManager();
+    //SDKTrays
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation("SdkTrays.zip", "Zip");
+    //Setup our overlay stuff
+    overlaySystem = new Ogre::OverlaySystem();
+    sceneMgr->addRenderQueueListener(overlaySystem);
+    trayMgr = new OgreBites::SdkTrayManager("Interface", window, inputContext, this);
+    //Show debug window with FPS stats
+    trayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 
     return 1;
 }
 
 Ogre::SceneManager* graphicsHandler::createSceneManager(std::string managerName){
     return gamesystem.root->createSceneManager(managerName);
+}
+
+int graphicsHandler::checkRenderWindow(){
+    if(getCurrentWindow() != NULL)
+        return 1;
+    else
+        return -1;
+}
+
+int graphicsHandler::checkSceneManager(){
+    if(getActiveSceneManager() != NULL)
+        return 1;
+    else
+        return -1;
 }
 
 Ogre::SceneManager* graphicsHandler::getActiveSceneManager(){

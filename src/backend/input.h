@@ -33,12 +33,16 @@ private:
     OIS::Keyboard* kb;
     OIS::Mouse* ms;
 
-    bool mouseMoved( const OIS::MouseEvent &arg ){}
-    bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id ){}
-    bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id ){}
+    Ogre::Real mRotate = 0.13;
+    Ogre::Real mMove;
+    Ogre::Vector3 mDirection;
 
-    bool keyPressed(const OIS::KeyEvent &arg){}
-    bool keyReleased(const OIS::KeyEvent &arg){}
+    bool mouseMoved( const OIS::MouseEvent &arg );
+    bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+    bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
+
+    bool keyPressed(const OIS::KeyEvent &arg);
+    bool keyReleased(const OIS::KeyEvent &arg);
 }; extern inputHandler inputMgr;
 
 #endif // INPUT_H_INCLUDED

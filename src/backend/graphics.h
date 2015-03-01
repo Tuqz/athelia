@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "OGRE/Ogre.h"
+#include "OGRE/SdkTrays.h"
 #include "cube.h"
 #include "gamesystem.h"
 
@@ -15,19 +16,51 @@
     * \version  0.0.1a
 */
 
-class graphicsHandler{
+class graphicsHandler: public OgreBites::SdkTrayListener {
 public:
     //Initializations and creations
+    /** \brief Initializes Ogre graphics
+     *
+     * \param   std::string renderSystem
+     * \param
+     * \return
+     *
+     */
     int initGraphics(std::string renderSystem, std::string windowTitle, bool fullScreen = false, std::string videoMode = "800 x 600 @ 32-bit colour", std::string pluginsFile = "", std::string resourcesFile = "", std::string logFile = "debug.log");
+
     Ogre::SceneManager* createSceneManager(std::string managerName="DefaultSceneManager");
 
     //Utility
     //Check private variables. May be used later for debugging
+
+    /** \brief  Checks if current render window is null.
+     *
+     * \returns -1 on a null render window
+     *
+     */
     int checkRenderWindow();
+
+    /** \brief Checks if the current scene manager is null.
+     *
+     * \returns -1 on a null scene manager
+     *
+     */
     int checkSceneManager();
 
     //Get defaults related to graphics
+
+    /** \brief Grabs the current Ogre SceneManager in use by the game
+     *
+     * \return  Ogre::SceneManager*
+     *
+     */
     Ogre::SceneManager* getActiveSceneManager();
+
+    /** \brief Grabs the current Ogre RenderWindow used by the game
+     *
+     * \return Ogre::RenderWindow*
+     *
+     */
     Ogre::RenderWindow* getCurrentWindow();
 
     //Movement of Ogre Elements
@@ -36,6 +69,11 @@ private:
     Ogre::RenderSystem *renderer;
     Ogre::RenderWindow *window;
     Ogre::SceneManager *sceneMgr;
+
+    //Overlay
+    Ogre::OverlaySystem *overlaySystem;
+    OgreBites::InputContext inputContext;
+    OgreBites::SdkTrayManager *trayMgr;
 }; extern graphicsHandler graphics;
 
 #endif // GRAPHICS_H_INCLUDED
