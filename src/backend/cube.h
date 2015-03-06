@@ -15,4 +15,5 @@ public:
 	void addToScene(Ogre::SceneManager *sceneMgr, double scale);
 	void removeFromScene(Ogre::SceneManager *sceneMgr);
 	void setMaterial(Ogre::MaterialPtr material);
+	//virtual bool frameRenderingQueued(const Ogre::FrameEvent &evt);
 };

@@ -6,7 +6,7 @@
 
 #pragma once
 
-class Block {
+class Block : public Ogre::FrameListener {
 protected:
 	Ogre::Entity *ent;
 	Ogre::SceneNode *node;
@@ -19,4 +19,5 @@ public:
 	void addToScene(Ogre::SceneManager *sceneMgr, double scale);
 	void removeFromScene(Ogre::SceneManager *sceneMgr);
 	void setMaterial(Ogre::MaterialPtr material);
+	virtual bool frameRenderingQueued(const Ogre::FrameEvent &evt) = 0;
 };

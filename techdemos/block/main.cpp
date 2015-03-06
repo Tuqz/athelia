@@ -1,37 +1,15 @@
-#include <cube.h>
 #include <memory>
 #include "OGRE/Ogre.h"
 #include "OIS/OISMouse.h"
 #include "OIS/OISKeyboard.h"
 #include "OIS/OISInputManager.h"
-#include <iostream>
+#include <inputManager.h>
+#include "spinningCube.h"
 
-class Controller : public Ogre::FrameListener {
-private:
-	std::vector<std::function<bool(OIS::KeyCode)>> callbacks; //Callbacks return true, unless the program needs to stop, when they return false
-	std::set<OIS::KeyCode> codes;
-	OIS::Keyboard *keyboard;
+class FrameListener : public Ogre::FrameListener {
 public:
-	Controller(OIS::Keyboard *kb) : keyboard(kb) {}
-	void addCallback(std::function<bool(OIS::KeyCode)> callback) {
-		callbacks.push_back(callback);
-	}
-	
-	void addKey(OIS::KeyCode code) {
-		codes.insert(code);
-	}
-	
-	bool frameRenderingQueued(const Ogre::FrameEvent &evt) {
-		bool result = true;
-		for(auto it = codes.begin(); it != codes.end(); ++it) {
-			if(keyboard->isKeyDown(*it)) {
-				std::cout<<*it<<std::endl;
-				for(auto f_it = callbacks.begin(); f_it != callbacks.end(); ++f_it) {
-					result = result && (*f_it)(*it);
-				}
-			}
-		}
-		return result;
+	bool frameRenderingQueued(const Ogre::FrameEvent& evt) {
+		return !inputManager::getInstance()->getState("Quit");
 	}
 };
 
@@ -63,27 +41,28 @@ int main() {
 	window->getCustomAttribute("WINDOW", &windowHandle);
 	list.insert(std::make_pair("WINDOW", std::to_string(windowHandle)));
 	OIS::InputManager *inputMgr = OIS::InputManager::createInputSystem(list);
-	OIS::Keyboard* keyboard = (OIS::Keyboard *)(inputMgr->createInputObject(OIS::OISKeyboard, false));
-	
-	Controller controller(keyboard);
-	controller.addCallback([] (OIS::KeyCode code) {
-		return (code != OIS::KC_ESCAPE);
-	});
-	controller.addKey(OIS::KC_ESCAPE);
+	OIS::Keyboard* keyboard = (OIS::Keyboard *)(inputMgr->createInputObject(OIS::OISKeyboard, true));
+	keyboard->setEventCallback(inputManager::getInstance());
+	inputManager::getInstance()->addCommand("Quit", 1);
+	inputManager::getInstance()->addCommand("RotRight", 0x12);
+	inputManager::getInstance()->addCommand("RotLeft", 0x10);
+	inputManager::getInstance()->keyboard = keyboard;
+	FrameListener listener;
 	
 	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Green", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	material->getTechnique(0)->getPass(0)->setLightingEnabled(true);
 	material->getTechnique(0)->getPass(0)->setDiffuse(0.0, 1.0, 0.0, 1.0);
 	material->load();
 	
-	std::unique_ptr<Cube> cube(new Cube());
+	std::unique_ptr<SpinningCube> cube(new SpinningCube());
 	cube->addToScene(sceneMgr, 40);
 	cube->setMaterial(material);
 	
 	Ogre::Light *light = sceneMgr->createLight("Light1");
 	light->setPosition(50, 50, 50);
 	
-	root->addFrameListener(&controller);
+	root->addFrameListener(&listener);
+	root->addFrameListener(cube.get());
 	
 	root->startRendering();
 	
